@@ -8,7 +8,7 @@ function Home() {
     console.log("clicked");
   };
   return (
-    <div className="home">
+    <div className="home-container">
       <Navbar minimal={true} authToken={authToken} />
       <div className="home">
         <h1>Swipe Right</h1>
