@@ -1,4 +1,6 @@
 import "../styles/Navbar.css";
+// import redLogo from "../images/redLogo.png";
+// import whitelogo from "../images/whiteLogo.png";
 
 function Navbar({ minimal, authToken }) {
   const redLogo = "https://img.icons8.com/color-glass/100/000000/--tinder.png";

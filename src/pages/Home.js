@@ -9,7 +9,7 @@ function Home() {
   };
   return (
     <div className="home">
-      <Navbar minimal={false} authToken={authToken} />
+      <Navbar minimal={true} authToken={authToken} />
       <div className="home">
         <h1>Swipe Right</h1>
         <button className="primary-button" onClick={handleClick}>
