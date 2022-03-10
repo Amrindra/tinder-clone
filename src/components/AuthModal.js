@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/AuthModal.css";
 
 // passing setShowModal state from the Home component
-function AuthModal({ setShowModal }) {
+function AuthModal({ setShowModal, setSignUp, isSignUp }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confrimPassword, setConfirmPassword] = useState(null);
@@ -16,9 +16,16 @@ function AuthModal({ setShowModal }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    try {
+      //checking to see if password matches with confirmPassowrd
+      if (isSignUp && password !== confrimPassword) {
+        setError("Passwords do not match!");
+      }
+      console.log("make a post request our database");
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const isSignUp = true;
 
   return (
     <div className="auth-modal">
@@ -50,16 +57,23 @@ function AuthModal({ setShowModal }) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <input
-          type="password-check"
-          id="password-check"
-          name="password-check"
-          placeholder="confirm password"
-          required={true}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        {/* if user signing up we need to show confrim password, but if only log in we don't need to show the confirm password */}
+        {isSignUp && (
+          <input
+            type="password-check"
+            id="password-check"
+            name="password-check"
+            placeholder="confirm password"
+            required={true}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        )}
+
+        <input className="secondary-button" type="submit" />
+        <p>{error}</p>
       </form>
-      AUTH MODAL
+      <hr />
+      <h2>GET THE APP</h2>s
     </div>
   );
 }
