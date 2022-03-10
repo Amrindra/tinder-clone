@@ -16,9 +16,14 @@ nav .logo-container .logo {
 .nav-button {
   color: rgb(254, 48, 115);
   background-color: rgb(255, 255, 255);
-  font-style: 20px;
+  font-size: 20px;
   padding: 10px 20px;
   border-radius: 10px;
   border: none;
   margin: 10px;
+}
+
+.nav-button:disabled {
+  background-color: rgb(138, 129, 129);
+  color: rgb(183, 19, 74);
 }
