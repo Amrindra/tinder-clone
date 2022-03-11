@@ -7,7 +7,8 @@
       rgba(0, 0, 0, 0.65) 0%,
       rgba(0, 0, 0, 0) 100%
     ),
-    url("/images/redLogo.png");
+    center/cover no-repeat
+      url("https://user-images.githubusercontent.com/70451928/157799210-352f9a46-0290-46dd-84a1-96718a93b3ac.png");
 }
 
 .home {

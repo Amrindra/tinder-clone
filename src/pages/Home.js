@@ -19,7 +19,6 @@ function Home() {
     <div className="home-container">
       <Navbar
         minimal={false}
-        authToken={authToken}
         setShowModal={setShowModal}
         showModal={showModal}
         setIsSignUp={setIsSignUp}

@@ -2,13 +2,7 @@ import "../styles/Navbar.css";
 // import redLogo from "../images/redLogo.png";
 // import whitelogo from "../images/whiteLogo.png";
 
-const Navbar = ({
-  minimal,
-  authToken,
-  setShowModal,
-  showModal,
-  setIsSignUp
-}) => {
+const Navbar = ({ minimal, setShowModal, showModal, setIsSignUp }) => {
   const redLogo = "https://img.icons8.com/color-glass/100/000000/--tinder.png";
   // const whitelogo = "https://img.icons8.com/ios/100/000000/--tinder.png";
   const whitelogo = "https://img.icons8.com/ios/100/000000/--tinder.png";
@@ -18,6 +12,7 @@ const Navbar = ({
     setIsSignUp(false);
   };
 
+  const authToken = true;
   return (
     <nav>
       <div className="logo-container">
