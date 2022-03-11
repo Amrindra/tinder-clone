@@ -26,18 +26,14 @@ function Home() {
       />
 
       <div className="home">
-        <h1>Swipe Right ®</h1>
+        <h1 className="homepage-title">Swipe Right®</h1>
         <button className="primary-button" onClick={handleClick}>
           {authToken ? "Signout" : "Create Account"}
         </button>
 
         {/* if showModal is true then show the AuthModal component */}
         {showModal && (
-          <AuthModal
-            setShowModal={setShowModal}
-            setSignUp={setIsSignUp}
-            isSignUp={isSignUp}
-          />
+          <AuthModal setShowModal={setShowModal} isSignUp={isSignUp} />
         )}
       </div>
     </div>

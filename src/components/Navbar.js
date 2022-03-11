@@ -10,6 +10,7 @@ const Navbar = ({
   setIsSignUp
 }) => {
   const redLogo = "https://img.icons8.com/color-glass/100/000000/--tinder.png";
+  // const whitelogo = "https://img.icons8.com/ios/100/000000/--tinder.png";
   const whitelogo = "https://img.icons8.com/ios/100/000000/--tinder.png";
 
   const handleClick = () => {

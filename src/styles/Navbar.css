@@ -21,6 +21,7 @@ nav .logo-container .logo {
   border-radius: 10px;
   border: none;
   margin: 15px;
+  cursor: pointer;
 }
 
 .nav-login-button:disabled {

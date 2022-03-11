@@ -3,8 +3,18 @@
   height: 100vh;
   position: fixed;
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("/images/redLogo.png");
+}
+
+.home {
+  margin-top: 30vh;
+}
+
+.homepage-title {
+  font-size: 6rem;
+  color: var(--white-color);
 }

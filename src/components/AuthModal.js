@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/AuthModal.css";
 
 // passing setShowModal state from the Home component
-function AuthModal({ setShowModal, setSignUp, isSignUp }) {
+function AuthModal({ setShowModal, isSignUp }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confrimPassword, setConfirmPassword] = useState(null);
@@ -73,7 +73,7 @@ function AuthModal({ setShowModal, setSignUp, isSignUp }) {
         <p>{error}</p>
       </form>
       <hr />
-      <h2>GET THE APP</h2>s
+      <h2>GET THE APP</h2>
     </div>
   );
 }
