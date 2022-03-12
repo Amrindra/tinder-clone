@@ -1,13 +1,48 @@
 import "../styles/Onboarding.css";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 
 function Onboarding() {
-  const handleChange = () => {
-    console.log("changed");
+  const [formData, setFormData] = useState({
+    user_id: "",
+    first_name: "",
+    dob_day: "",
+    dob_month: "",
+    dob_year: "",
+    show_gender: false,
+    gender_identity: "man",
+    gender_interest: "woman",
+    email: "",
+    url: "",
+    about: "",
+    matches: []
+  });
+
+  const handleChange = (event) => {
+    console.log("event", event);
+    const value =
+      // if a user checks on checkbox then retrieve that value from the checkbox otherwise retrieve data from user type in
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    const name = event.target.name;
+    console.log("value is: " + value, "name is: " + name);
+
+    //when we recieved data from a user "name and value" then we call setFormData and pass in previous state and update its value. EX: [name]:value
+    setFormData((prevState) => ({
+      // ...prevState meaning that copy all the prevState and search for [name] and set its value [name]:value
+      ...prevState,
+      [name]: value
+    }));
+    console.log([name]);
   };
+
+  console.log(formData);
+
   const handleSubmit = () => {
     console.log("submit");
   };
+
   return (
     <>
       <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
@@ -23,10 +58,11 @@ function Onboarding() {
               name="first_name"
               placeholder="First Name"
               required={true}
-              value={""}
+              value={formData.first_name}
               onChange={handleChange}
             />
 
+            {/* ********Birthday SECTION************ */}
             <label htmlFor="dob_day">Birthday</label>
             <div className="multiple-input-wrapper">
               <input
@@ -35,7 +71,7 @@ function Onboarding() {
                 name="dob_day"
                 placeholder="DD"
                 required={true}
-                value={""}
+                value={formData.dob_day}
                 onChange={handleChange}
               />
 
@@ -45,7 +81,7 @@ function Onboarding() {
                 name="dob_month"
                 placeholder="MM"
                 required={true}
-                value={""}
+                value={formData.dob_month}
                 onChange={handleChange}
               />
 
@@ -55,40 +91,42 @@ function Onboarding() {
                 name="dob_year"
                 placeholder="YYYY"
                 required={true}
-                value={""}
+                value={formData.dob_year}
                 onChange={handleChange}
               />
             </div>
 
+            {/* ********GENDER IDENTITY SECTION************ */}
             <label htmlFor="gender">Gender</label>
             <div className="multiple-input-wrapper">
               <input
                 type="radio"
                 id="man-gender-identity"
-                name="gender-identity"
+                name="gender_identity"
                 value="man"
                 onChange={handleChange}
-                checked={false}
+                // show check when user checks on man lable
+                checked={formData.gender_identity === "man"}
               />
               <label htmlFor="man-gender-identity">Man</label>
 
               <input
                 type="radio"
                 id="woman-gender-identity"
-                name="gender-identity"
+                name="gender_identity"
                 value="woman"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender_identity === "woman"}
               />
               <label htmlFor="woman-gender-identity">Woman</label>
 
               <input
                 type="radio"
                 id="more-gender-identity"
-                name="gender-identity"
+                name="gender_identity"
                 value="more"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender_identity === "more"}
               />
               <label htmlFor="more-gender-identity">More</label>
             </div>
@@ -97,42 +135,44 @@ function Onboarding() {
             <input
               type="checkbox"
               id="show-gender"
-              name="show-gender"
+              name="show_gender"
               onChange={handleChange}
-              checked={false}
+              checked={formData.show_gender}
             />
+
+            {/* ********GENDER INTEREST SECTION************ */}
 
             <label htmlFor="">Show Me</label>
             <div className="multiple-input-wrapper">
               <input
                 type="radio"
                 id="man-gender-interest"
-                name="gender-interest"
+                name="gender_interest"
                 value="man"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender_interest === "man"}
               />
               <label htmlFor="man-gender-interest">Man</label>
 
               <input
                 type="radio"
                 id="woman-gender-interest"
-                name="gender-interest"
+                name="gender_interest"
                 value="woman"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender_interest === "woman"}
               />
               <label htmlFor="woman-gender-interest">Woman</label>
 
               <input
                 type="radio"
                 id="everyone-gender-interest"
-                name="gender-interest"
+                name="gender_interest"
                 value="everyone"
                 onChange={handleChange}
-                checked={false}
+                checked={formData.gender_interest === "everyone"}
               />
-              <label htmlFor="more-gender-interest">Everyone</label>
+              <label htmlFor="everyone-gender-interest">Everyone</label>
             </div>
 
             <label htmlFor="about">About me</label>
@@ -142,7 +182,7 @@ function Onboarding() {
               name="about"
               placeholder="I like long walks.."
               required={true}
-              value={""}
+              value={formData.about}
               onChange={handleChange}
             />
             <input type="submit" />
@@ -157,6 +197,10 @@ function Onboarding() {
               required={true}
               onChange={handleChange}
             />
+
+            <div className="photo-wrapper">
+              <img src={formData.url} alt="profile pic preview" />
+            </div>
           </section>
         </form>
       </div>

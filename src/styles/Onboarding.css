@@ -1,3 +1,6 @@
+.onboarding {
+  border-top: solid 1px rgb(219, 219, 219);
+}
 .onboarding form {
   display: flex;
   justify-content: center;
@@ -8,6 +11,7 @@
   flex-direction: column;
   padding: 20px;
   width: 35%;
+  text-align: left;
 }
 
 .onboarding form label {
@@ -50,7 +54,24 @@
   display: none;
 }
 
+.onboarding form input[type="number"] {
+  width: 12%;
+}
+
 /* if the user checks on the label of type radio it will change border color  */
 .onboarding form input[type="radio"]:checked + label {
   border: solid 2px rgb(221, 39, 22);
+}
+
+.onboarding form input[type="submit"]:hover {
+  background-color: rgb(235, 235, 235);
+  cursor: pointer;
+}
+
+.onboarding form input[type="submit"]:active {
+  background-color: rgb(226, 115, 155);
+}
+
+.photo-wrapper img {
+  width: 100%;
 }
