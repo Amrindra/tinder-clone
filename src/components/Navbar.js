@@ -13,6 +13,7 @@ const Navbar = ({ minimal, setShowModal, showModal, setIsSignUp }) => {
   };
 
   const authToken = false;
+
   return (
     <nav>
       <div className="logo-container">
