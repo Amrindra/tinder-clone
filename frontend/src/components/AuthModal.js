@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../styles/AuthModal.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // passing setShowModal state from the Home component
 function AuthModal({ setShowModal, isSignUp }) {
@@ -8,20 +10,32 @@ function AuthModal({ setShowModal, isSignUp }) {
   const [confrimPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   console.log(email, password, confrimPassword);
 
   const handleClick = () => {
     setShowModal(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       //checking to see if password matches with confirmPassowrd
       if (isSignUp && password !== confrimPassword) {
         setError("Passwords do not match!");
+        return;
       }
-      console.log("make a post request our database");
+      // passing email and password to axios which make a post request to the backend database
+      const response = await axios.post("http://localhost:8000/signup", {
+        email,
+        password,
+      });
+
+      const success = response.status === 201;
+
+      // if authentication is success (provide the correct email and password) send the user to the onboarding page
+      if (success) navigate("/onboarding");
     } catch (error) {
       console.log(error);
     }
