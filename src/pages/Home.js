@@ -26,9 +26,19 @@ function Home() {
 
       <div className="home">
         <h1 className="homepage-title">Swipe Right®</h1>
-        <button className="primary-button" onClick={handleClick}>
+        <button className="create-signout-button" onClick={handleClick}>
           {authToken ? "Signout" : "Create Account"}
         </button>
+
+        {/* These buttons will appear only on small screen */}
+        <div className="btn-on-smallScren-wrapper">
+          <button className="create-btn-on-smallScreen" onClick={handleClick}>
+            Create Account
+          </button>
+          <button className="login-btn-on-smallScreen" onClick={handleClick}>
+            Login
+          </button>
+        </div>
 
         {/* if showModal is true then show the AuthModal component */}
         {showModal && (

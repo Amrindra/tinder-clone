@@ -24,21 +24,6 @@ h2 {
   font-style: italic;
 }
 
-.primary-button {
-  text-transform: uppercase;
-  font-size: 15px;
-  color: #fff;
-  background: var(--primary-button-color);
-  padding: 12px 30px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-}
-
-.primary-button:hover {
-  background: linear-gradient(260deg, #fe3072, #ff5940);
-}
-
 .secondary-button {
   color: rgb(121, 119, 119);
   background-color: rgb(255, 255, 255);

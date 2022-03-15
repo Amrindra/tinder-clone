@@ -12,10 +12,82 @@
 }
 
 .home {
-  margin-top: 30vh;
+  margin-top: 22vh;
 }
 
 .homepage-title {
-  font-size: 6rem;
+  margin-bottom: 1rem;
+  font-size: 7.5vw;
+  font-weight: 800;
   color: var(--white-color);
+}
+
+.create-signout-button {
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+  background: var(--primary-button-color);
+  /* padding:30px 50px ; */
+  width: 20vw;
+  height: 70px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.create-signout-button:hover {
+  background: linear-gradient(260deg, #fe3072, #ff5940);
+}
+
+.create-btn-on-smallScreen {
+  display: none;
+}
+
+.login-btn-on-smallScreen {
+  display: none;
+}
+
+@media screen and (max-width: 895px) {
+  .home-container {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      center/cover no-repeat
+        url("https://user-images.githubusercontent.com/70451928/158305398-90661328-a4ac-439d-afea-cbd902bcac41.png");
+  }
+
+  .create-signout-button {
+    display: none;
+  }
+
+  .create-btn-on-smallScreen,
+  .login-btn-on-smallScreen {
+    display: block;
+    width: 80%;
+    min-height: 54px;
+    letter-spacing: 0.02em;
+    background-color: var(--white-color);
+    border-radius: 50px;
+    border: none;
+    font-size: 1.2rem;
+  }
+
+  .login-btn-on-smallScreen {
+    background: none;
+    border: solid 2px var(--white-color);
+    color: var(--white-color);
+    margin-top: 20px;
+  }
+
+  .btn-on-smallScren-wrapper {
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* width: 80%; */
+  }
 }
