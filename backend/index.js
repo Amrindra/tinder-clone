@@ -3,11 +3,16 @@ const PORT = 8000;
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const uri =
   "mongodb+srv://amrin:tinder-12345@cluster0.9bbug.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json("Hello");
@@ -18,6 +23,7 @@ app.post("/signup", async (req, res) => {
 
   // accessing and extracting the email and password from the frontend by using using req.body
   const { email, password } = req.body;
+  console.log(req.body);
 
   // using uuid to generate a unique user id
   const generatedUserId = uuidv4();
@@ -32,10 +38,10 @@ app.post("/signup", async (req, res) => {
     const database = client.db("app-data");
     const users = database.collection("users");
 
-    //Checking by email to see if the user is already exist if it exists we don't want to sign up again
-    const existingUser = users.findOne({ email });
+    //Checking by email to see if the user is already exist if it exists don't sign this user up again
+    const existingUser = await users.findOne({ email });
 
-    //if the user alerady exist inform the user to login instead
+    //if the user alerady existed inform the user to login instead
     if (existingUser) {
       return res.status(409).send("User already exists. Please login");
     }
@@ -53,7 +59,20 @@ app.post("/signup", async (req, res) => {
 
     //Inserting data to the users document in the database
     const inseretedUser = await users.insertOne(data);
-  } catch (error) {}
+
+    //Generating web token
+    const token = jwt.sign(inseretedUser, sanitizedEmail, {
+      //Setting token to be expired in 24 hours
+      expiresIn: 60 * 24,
+    });
+
+    //Sending back the status code, token, userId, and email
+    res
+      .status(201)
+      .json({ token, userId: generatedUserId, email: sanitizedEmail });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/users", async (req, res) => {
