@@ -23,7 +23,7 @@ app.post("/signup", async (req, res) => {
 
   // accessing and extracting the email and password from the frontend by using using req.body
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   // using uuid to generate a unique user id
   const generatedUserId = uuidv4();
@@ -66,7 +66,7 @@ app.post("/signup", async (req, res) => {
       expiresIn: 60 * 24,
     });
 
-    //Sending back the status code, token, userId, and email
+    //Sending back the status code, token, userId, and email to the frontend/client side that being fetched by axios
     res
       .status(201)
       .json({ token, userId: generatedUserId, email: sanitizedEmail });

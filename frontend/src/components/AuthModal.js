@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/AuthModal.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 // passing setShowModal state from the Home component
 function AuthModal({ setShowModal, isSignUp }) {
@@ -9,6 +10,7 @@ function AuthModal({ setShowModal, isSignUp }) {
   const [password, setPassword] = useState(null);
   const [confrimPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   const navigate = useNavigate();
 
@@ -31,6 +33,11 @@ function AuthModal({ setShowModal, isSignUp }) {
         email,
         password,
       });
+
+      //Setting cookie for email, userId, and token which are getting response back from the backend which is "sanitizedEmail, generatedUserId, userId " being returned
+      setCookie("Email", response.data.email);
+      setCookie("UserId", response.data.userId);
+      setCookie("AuthToken", response.data.token);
 
       const success = response.status === 201;
 
