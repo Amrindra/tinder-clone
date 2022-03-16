@@ -38,7 +38,7 @@ app.post("/signup", async (req, res) => {
     const database = client.db("app-data");
     const users = database.collection("users");
 
-    //Checking by email to see if the user is already exist if it exists don't sign this user up again
+    //Checking by email to see if the user is already exist if a user exists don't let this user sign up again
     const existingUser = await users.findOne({ email });
 
     //if the user alerady existed inform the user to login instead
@@ -49,15 +49,15 @@ app.post("/signup", async (req, res) => {
     //To convert email to lowercase when saving to the database
     const sanitizedEmail = email.toLowerCase();
 
-    //Asigning data to the users collection in the database then will insert it to the database
+    //Asigning data to the users collection in the database then will insert them to the database
     const data = {
-      //make sure we make (properties) it the same exaclty to the ones in the database
+      //make sure we provide properties name the same exaclty to the ones in database
       user_id: generatedUserId,
       email: sanitizedEmail,
       hashed_password: hashedPassword,
     };
 
-    //Inserting data to the users document in the database
+    //Inserting data to the users document in the database. This meaning that when a user sign up an account it will save in database
     const inseretedUser = await users.insertOne(data);
 
     //Generating web token
