@@ -75,6 +75,42 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  const client = new MongoClient(uri);
+  const { email, password } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+
+    //Find a user by email
+    const user = await users.findOne({ email });
+
+    //bcrypt.compare is used to compare between passord that user typed in with hashed_password in database to if both passwords match/correct
+    const correctedPassword = await bcrypt.compare(
+      password,
+      user.hashed_password
+    );
+
+    //Check to see if a user exists and password that user typed in is correct with the user.hashed_password that stores in database
+    //if both passwords match/correct then create a new token
+    if (user && correctedPassword) {
+      const token = jwt.sign(user, email, {
+        expiresIn: 60 * 24,
+      });
+
+      //Now both passwords are match, so send json file
+      res.status(201).json({ token, userId: user.user_id, email });
+    }
+
+    //Otherwise, password is incorrect, so send back the invalid password message
+    res.status(400).send("Invalid Password!");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
 

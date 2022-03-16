@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/ChatInput.css";
 
 const ChatInput = () => {
-  const [textArea, setTextArea] = useState(null);
+  const [textArea, setTextArea] = useState("");
 
   return (
     <div className="chat-input">

@@ -29,10 +29,14 @@ function AuthModal({ setShowModal, isSignUp }) {
         return;
       }
       // passing email and password to axios which make a post request to the backend database
-      const response = await axios.post("http://localhost:8000/signup", {
-        email,
-        password,
-      });
+      //if user isn't signup bring them to signup page otherwise bring them to the login page
+      const response = await axios.post(
+        `http://localhost:8000/${isSignUp ? "signup" : "login"}`,
+        {
+          email,
+          password,
+        }
+      );
 
       //Setting cookie for email, userId, and token which are getting response back from the backend which is "sanitizedEmail, generatedUserId, userId " being returned
       setCookie("Email", response.data.email);
@@ -41,8 +45,10 @@ function AuthModal({ setShowModal, isSignUp }) {
 
       const success = response.status === 201;
 
-      // if authentication is success (provide the correct email and password) send the user to the onboarding page
-      if (success) navigate("/onboarding");
+      // if authentication is success (provide the correct email and password) and signup then send the user to the onboarding page
+      if (success && isSignUp) navigate("/onboarding");
+      //if authenticatoiin is success and not signup then navigate to dashboard page
+      if (success && !isSignUp) navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +87,7 @@ function AuthModal({ setShowModal, isSignUp }) {
         {/* if user signing up we need to show confrim password, but if only log in we don't need to show the confirm password */}
         {isSignUp && (
           <input
-            type="password-check"
+            type="password"
             id="password-check"
             name="password-check"
             placeholder="confirm password"
