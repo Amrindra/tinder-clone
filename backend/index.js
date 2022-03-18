@@ -66,10 +66,8 @@ app.post("/signup", async (req, res) => {
       expiresIn: 60 * 24,
     });
 
-    //Sending back the status code, token, userId, and email to the frontend/client side that being fetched by axios
-    res
-      .status(201)
-      .json({ token, userId: generatedUserId, email: sanitizedEmail });
+    //Sending back the status code and token to the frontend/client side that being fetched by axios
+    res.status(201).json({ token, userId: generatedUserId });
   } catch (error) {
     console.log(error);
   }
@@ -100,8 +98,8 @@ app.post("/login", async (req, res) => {
         expiresIn: 60 * 24,
       });
 
-      //Now both passwords are match, so send json file
-      res.status(201).json({ token, userId: user.user_id, email });
+      //Now both passwords are match, so send back token and userId as json file
+      res.status(201).json({ token, userId: user.user_id });
     }
 
     //Otherwise, password is incorrect, so send back the invalid password message
@@ -121,6 +119,58 @@ app.get("/users", async (req, res) => {
 
     const returnUsers = await users.find().toArray();
     res.send(returnUsers);
+  } finally {
+    await client.close();
+  }
+});
+
+app.get("/user", async (req, res) => {
+  const client = new MongoClient(uri);
+  const userId = req.query.userId;
+
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+
+    const query = { user_id: userId };
+    const user = await users.findOne(query);
+    res.send(user);
+  } finally {
+    await client.close();
+  }
+});
+
+//The following route will happen when a user submits a form from onboarding page
+app.put("/user", async (req, res) => {
+  const client = new MongoClient(uri);
+  const formData = req.body.formData;
+
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+
+    // Looking for user from formData.user_id that just saved from the cookies
+    const query = { user_id: formData.user_id };
+    //Udating user information
+    const updateDocument = {
+      $set: {
+        first_name: formData.first_name,
+        dob_day: formData.dob_day,
+        dob_month: formData.dob_month,
+        dob_year: formData.dob_year,
+        show_gender: formData.show_gender,
+        gender_identity: formData.gender_identity,
+        gender_interest: formData.gender_interest,
+        url: formData.url,
+        about: formData.about,
+        matches: formData.matches,
+      },
+    };
+
+    const insertedUser = await users.updateOne(query, updateDocument);
+    res.send(insertedUser);
   } finally {
     await client.close();
   }

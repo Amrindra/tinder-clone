@@ -1,36 +1,56 @@
 import "../styles/Dashboard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import TinderCard from "react-tinder-card";
 import ChatContainer from "../components/ChatContainer";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function Dashboard() {
+  const [user, setUser] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
+  const userId = cookies.UserId;
+  const getUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/user", {
+        params: { userId },
+      });
+      // console.log("getUser respoonse", response);
+
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  console.log(user);
+
   const characters = [
     {
       name: "Richard Hendricks",
-      url:
-        "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG"
+      url: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG",
     },
     {
       name: "Erlich Bachman",
-      url:
-        "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG"
+      url: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG",
     },
     {
       name: "Monica Hall",
-      url:
-        "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG"
+      url: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG",
     },
     {
       name: "Jared Dunn",
-      url:
-        "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG"
+      url: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG",
     },
     {
       name: "Dinesh Chugtai",
-      url:
-        "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG"
-    }
+      url: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_27/3489810/210709-pandas-mc-10262.JPG",
+    },
   ];
 
   const [lastDirection, setLastDirection] = useState();

@@ -41,7 +41,7 @@ function AuthModal({ setShowModal, isSignUp }) {
       //Setting cookie for email, userId, and token which are getting response back from the backend which is "sanitizedEmail, generatedUserId, userId " being returned
       setCookie("Email", response.data.email);
       setCookie("UserId", response.data.userId);
-      setCookie("AuthToken", response.data.token);
+      // setCookie("AuthToken", response.data.token);
 
       const success = response.status === 201;
 

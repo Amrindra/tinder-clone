@@ -1,10 +1,15 @@
 import "../styles/Onboarding.css";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Onboarding() {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
   const [formData, setFormData] = useState({
-    user_id: "",
+    user_id: cookies.UserId,
     first_name: "",
     dob_day: "",
     dob_month: "",
@@ -12,11 +17,13 @@ function Onboarding() {
     show_gender: false,
     gender_identity: "man",
     gender_interest: "woman",
-    email: "",
+    // email: cookies.Email,
     url: "",
     about: "",
-    matches: []
+    matches: [],
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     console.log("event", event);
@@ -32,15 +39,28 @@ function Onboarding() {
     setFormData((prevState) => ({
       // ...prevState meaning that copy all the prevState and search for [name] and set its value [name]:value
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
     console.log([name]);
   };
 
   console.log(formData);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event) => {
     console.log("submit");
+    event.preventDefault();
+
+    try {
+      const response = await axios.put("http://localhost:8000/user", {
+        formData,
+      });
+
+      const success = response.status === 200;
+
+      if (success) navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -199,7 +219,10 @@ function Onboarding() {
             />
 
             <div className="photo-wrapper">
-              <img src={formData.url} alt="profile pic preview" />
+              {/* Only show profile pictures when form data is exist */}
+              {formData.url && (
+                <img src={formData.url} alt="profile pic preview" />
+              )}
             </div>
           </section>
         </form>
